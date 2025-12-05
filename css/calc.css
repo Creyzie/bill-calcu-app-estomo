@@ -1,0 +1,103 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: url('galxy.avif') no-repeat center center fixed;
+    background-size: cover;
+    color: #00ffff;
+}
+
+
+#menu-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    color: white;
+    z-index: 999;
+}
+
+
+#menu-btn{
+    font-size: 30px;
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    cursor: pointer;
+    margin-top: 5%;
+}
+
+
+#sideMenu{
+    position: absolute;
+    right: -150px;
+    top: 60px;
+    width: 150px;
+    padding: 10px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 10px;
+    transition: 0.4s;
+    margin-top: 5%;
+}
+#sideMenu{
+    right: 50px;
+}
+
+
+#sideMenu ul li{
+    list-style: none;
+    margin: 12px 0;
+}
+
+#sideMenu a{
+    text-decoration: none;
+    color: black;
+    font-size: 13px;
+}
+
+
+
+.container {
+    max-width: 600px;
+    margin: 80px auto;
+    background: rgba(0,0,0,0.5);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+input, button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+button {
+    background: #15a9c4;
+    color: white;
+    cursor: pointer;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+table, th, td {
+    border: 1px solid white;
+    color: white;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+}
+h1{
+ font-family: 'Press Start 2P', cursive;
+ text-align: center ;
+}

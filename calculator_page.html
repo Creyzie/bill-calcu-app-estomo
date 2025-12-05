@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Electric Bill Calculator</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="css/calc.css">
+</head>
+<body>
+  <div id="menu-btn" aria-expanded="false">☰</div>
+  <div id="sideMenu">
+    <ul>
+      <li><a href="homepage.html">Home</a></li>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="profile_page.html">Profile</a></li>
+    </ul>
+  </div>
+
+  <h1>Electric Bill Calculator</h1>
+
+  <div class="container">
+    <label for="kwh">Kilowatt Hours (kWh)</label>
+    <input id="kwh" type="number" placeholder="Enter kWh">
+
+    <label for="cost">Cost Per kWh (₱)</label>
+    <input id="cost" type="number" placeholder="Enter cost per kWh">
+
+    <label for="month">Month</label>
+    <input id="month" type="text" placeholder="Enter month">
+
+    <button id="calculateBtn">Calculate</button>
+
+    <table>
+      <thead>
+        <tr><th>Date</th><th>Month</th><th>kWh</th><th>Cost</th><th>Total</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td id="outDate"></td>
+          <td id="outMonth"></td>
+          <td id="outKwh"></td>
+          <td id="outCost"></td>
+          <td id="outTotal"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script src="js/menu.js"></script>
+  <script src="js/calc.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

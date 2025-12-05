@@ -1,0 +1,143 @@
+/* GLOBAL RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* BACKGROUND */
+body {
+    font-family: Arial, sans-serif;
+    background: url("galxy.avif") no-repeat center center fixed;
+    background-size: cover;
+    color: #00ffff;
+    text-align: center;
+}
+
+/* PAGE WRAPPER */
+.container {
+    margin-top: 80px;
+}
+
+/* TITLE SECTION */
+.Title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 4%;
+    gap: 15px;
+}
+
+.Title .logo {
+    width: 90px;
+    height: auto;
+}
+
+h1 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 28px;
+    color: #00ffff;
+}
+
+/* SUBHEADERS */
+h2 {
+    margin-top: 10px;
+    font-style: italic;
+    text-decoration: underline;
+}
+
+/* FORM STYLING */
+form {
+    margin-top: 35px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    width: 260px;
+    padding: 12px;
+    margin: 12px 0;
+    border: none;
+    border-bottom: 2px solid #00ffff;
+    background: transparent;
+    color: #00ffff;
+    font-size: 16px;
+    outline: none;
+}
+
+/* SHOW PASSWORD CHECKBOX */
+input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+label {
+    font-size: 13px;
+}
+
+/* BUTTONS */
+button {
+    margin-top: 25px;
+    padding: 10px 55px;
+    border: none;
+    border-radius: 8px;
+    background-color: #66f0ff;
+    color: #000;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+button:hover {
+    background-color: #032437;
+    color: white;
+}
+
+/* BACK BUTTON */
+.back-btn {
+    display: inline-block;
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    background-color: #66f0ff;
+    color: black;
+    padding: 8px 22px;
+    border-radius: 6px;
+    font-size: 16px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.back-btn:hover {
+    background-color: #032437;
+    color: white;
+}
+
+/* FORGOT PASSWORD LINK */
+.forgot {
+    text-decoration: none;
+    color: #00ffff;
+    margin-left: 10px;
+}
+
+.forgot:hover {
+    color: #66f0ff;
+    text-decoration: underline;
+}
+
+/* RESPONSIVE FIXES */
+@media (max-width: 600px) {
+    .Title {
+        flex-direction: column;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+        width: 80%;
+    }
+}

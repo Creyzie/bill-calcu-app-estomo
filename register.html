@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+
+    <link rel="stylesheet" href="css/Styless.css">
+</head>
+
+<body>
+
+    <button class="back-btn" onclick="window.location.href='index.html'">← Back</button>
+
+    <div class="Registration">
+        <h1>REGISTRATION</h1>
+
+        <form id="registerForm">
+            <input type="text" name="name" id="regName" placeholder="Full Name" required>
+            <input type="text" name="username" id="regUser" placeholder="Username" required>
+            <input type="email" name="email" id="regEmail" placeholder="Email" required>
+            <input type="password" name="password" id="regPass" placeholder="Password" required>
+            <input type="password" name="confirm" id="regConfirm" placeholder="Confirm Password" required>
+
+            <label class="show-password">
+                <input type="checkbox" id="showPass"> Show password
+            </label>
+
+            <button type="submit">REGISTER</button>
+        </form>
+    </div>
+
+    <script src="js/supabase-config.js"></script>
+    <script src="js/auth.js"></script>
+
+    <script>
+        const showPass = document.getElementById("showPass");
+        showPass.addEventListener("change", () => {
+            const pass = document.getElementById("regPass");
+            const conf = document.getElementById("regConfirm");
+
+            pass.type = showPass.checked ? "text" : "password";
+            conf.type = showPass.checked ? "text" : "password";
+        });
+
+        document.getElementById("registerForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById("regName").value;
+            const username = document.getElementById("regUser").value;
+            const email = document.getElementById("regEmail").value;
+            const password = document.getElementById("regPass").value;
+            const confirm = document.getElementById("regConfirm").value;
+
+            if (password !== confirm) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            const { data, error } = await supabase.auth.signUp({
+                email: email,
+                password: password,
+                options: {
+                    data: {
+                        full_name: name,
+                        username: username
+                    }
+                }
+            });
+
+            if (error) {
+                alert("Registration failed: " + error.message);
+                return;
+            }
+
+            alert("Registration successful!");
+            window.location.href = "login.html";
+        });
+    </script>
+
+</body>
+</html>

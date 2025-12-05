@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electric Bill Calculator Login</title>
+
+    <link rel="stylesheet" href="css/Styles.css">
+</head>
+
+<body>
+
+    <!-- BACK BUTTON -->
+    <a href="index.html" class="back-btn">← Back</a>
+
+    <!-- TITLE + LOGO -->
+    <div class="Title">
+        <img src="css/black.jpg" class="logo" alt="logo">
+        <h1>Electric Bill Calculator Login</h1>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div class="container">
+        <h1>Electric Bill Calculator</h1>
+        <h2>Login</h2>
+        <h2>WELCOME</h2>
+
+        <!-- LOGIN FORM (FORCE REDIRECT) -->
+        <form id="loginForm">
+            <div>
+                <input type="email" name="email" placeholder="Email" required>
+            </div>
+
+            <div>
+                <input type="password" name="password" id="passwordField" placeholder="Password" required>
+            </div>
+
+            <div>
+                <input type="checkbox" id="showPassword">
+                <label for="showPassword">Show password</label>
+
+                <label>
+                    <a href="recover.html" class="forgot">Forgot password?</a>
+                </label>
+            </div>
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <!-- FORCE REDIRECT SCRIPT -->
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(e) {
+            e.preventDefault(); 
+            window.location.href = "dashboard.html";
+        });
+
+        // Show password toggle
+        const showPassword = document.getElementById("showPassword");
+        const passwordField = document.getElementById("passwordField");
+
+        showPassword.addEventListener("change", () => {
+            passwordField.type = showPassword.checked ? "text" : "password";
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+    background: url("galxy.avif") no-repeat center center fixed;
+    background-size: cover;
+}
+
+
+.sidebar {
+    width: 180px;
+    background: #dcdcdc;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    padding-top: 20px;
+}
+
+.sidebar h2 {
+    padding: 15px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.sidebar .active {
+    background: white;
+}
+
+
+.main {
+    margin-left: 200px;
+    padding: 20px;
+}
+
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.icon {
+    width: 90px;
+}
+
+.title-text h1 {
+    font-size: 40px;
+    color: white;
+}
+
+
+.welcome-box {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 25px;
+    width: 70%;
+    margin-top: 20px;
+    border-radius: 15px;
+    color: white;
+    backdrop-filter: blur(10px);
+}
+
+
+.table-container {
+    margin-top: 30px;
+}
+
+table {
+    width: 70%;
+    border-collapse: collapse;
+    background: white;
+}
+
+table th, table td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+}
+
+table th {
+    background: #dddddd;
+}

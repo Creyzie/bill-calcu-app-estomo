@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Electric Bill Calculator</title>
+
+<!-- Correct CSS path -->
+<link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <a href="profile_page.html"><h2>Profile</h2></a>
+    <a href="calculator_page.html"><h2 class="active">Calculator</h2></a>
+    <a href="index.html"><h2>Homepage</h2></a>
+    <a href="dashboard.html"><h2>Dashboard</h2></a>
+    <a href="login.html"><h2>Log-out</h2></a>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+    <!-- HEADER -->
+    <div class="header">
+        <img src="css/black.jpg" class="icon" alt="">
+        <div class="title-text">
+            <h1>Electric Bill Calculator</h1>
+        </div>
+    </div>
+
+    <!-- WELCOME SECTION -->
+    <div class="welcome-box">
+        <h2>Welcome User!</h2>
+        <p>Here’s an overview of electric bill activity.</p>
+    </div>
+
+    <!-- TABLE SECTION -->
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Month</th>
+                    <th>Power Consumption (kWh)</th>
+                    <th>Cost per kWh</th>
+                    <th>Total Bill (₱)</th>
+                </tr>
+            </thead>
+
+            <!-- Dynamic table body populated by dashboard.js -->
+            <tbody id="historyBody"></tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- JAVASCRIPT -->
+<script src="js/dashboard.js"></script>
+<script src="js/storage.js"></script>
+
+</body>
+</html>
