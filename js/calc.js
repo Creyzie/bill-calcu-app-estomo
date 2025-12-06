@@ -1,5 +1,4 @@
 // js/calc.js
-// Handles bill calculation and saving to localStorage (or Supabase if configured)
 document.addEventListener('DOMContentLoaded', () => {
   const kwhInput = document.getElementById('kwh');
   const costInput = document.getElementById('cost');
@@ -17,52 +16,71 @@ document.addEventListener('DOMContentLoaded', () => {
     const { kwh, cost, month } = readInputs();
     const total = +(kwh * cost).toFixed(2);
     const date = new Date().toLocaleDateString();
+    const timestamp = new Date().toISOString(); // <-- added timestamp (created_at)
 
-    // Update UI if elements exist
-    const outDate = document.getElementById('outDate');
-    const outMonth = document.getElementById('outMonth');
-    const outKwh = document.getElementById('outKwh');
-    const outCost = document.getElementById('outCost');
-    const outTotal = document.getElementById('outTotal');
+    // Update UI
+    document.getElementById("outDate").textContent = date;
+    document.getElementById("outMonth").textContent = month;
+    document.getElementById("outKwh").textContent = kwh.toFixed(2);
+    document.getElementById("outCost").textContent = cost.toFixed(2);
+    document.getElementById("outTotal").textContent = `₱${total.toFixed(2)}`;
 
-    if (outDate) outDate.textContent = date;
-    if (outMonth) outMonth.textContent = month;
-    if (outKwh) outKwh.textContent = kwh.toFixed(2);
-    if (outCost) outCost.textContent = cost.toFixed(2);
-    if (outTotal) outTotal.textContent = `₱${total.toFixed(2)}`;
+    const entry = { date, month, kwh, cost, total, created_at: timestamp };
 
-    const entry = { date, month, kwh: +kwh.toFixed(2), cost: +cost.toFixed(2), total };
+    // disable button while saving to prevent double clicks
+    if (calcBtn) calcBtn.disabled = true;
 
-    // If Supabase client is present (supabase from supabase-config.js), try saving there
-    if (window.supabase) {
-      try {
-        // assumes a table named 'bills' with columns: user_id (optional), date, month, kwh, cost, total
-        const { error } = await window.supabase.from('bills').insert([entry]);
-        if (error) throw error;
-      } catch (err) {
-        console.warn('Supabase save failed, falling back to localStorage:', err);
+    try {
+      // Try Supabase (no blocking alerts)
+      if (window.supabase) {
+        const { data } = await supabase.auth.getUser();
+        const user = data?.user;
+
+        if (user) {
+          // insert with created_at so your table shows the exact time
+          const { error } = await supabase.from("bills").insert({
+            user_id: user.id,
+            date,
+            month,
+            kwh,
+            cost,
+            total,
+            created_at: timestamp
+          });
+          if (error) throw error;
+        } else {
+          // not logged in -> save locally
+          saveToLocal(entry);
+        }
+      } else {
         saveToLocal(entry);
       }
-    } else {
+    } catch (err) {
+      console.warn("Save failed, fallback to local:", err);
       saveToLocal(entry);
+    } finally {
+      if (calcBtn) calcBtn.disabled = false;
     }
 
-    // re-render history if function exists
-    if (typeof renderHistory === 'function') renderHistory();
+    if (typeof renderHistory === "function") renderHistory();
   };
 
   function saveToLocal(entry) {
-    const history = JSON.parse(localStorage.getItem('billHistory') || '[]');
+    const history = JSON.parse(localStorage.getItem("billHistory") || "[]");
     history.unshift(entry);
-    localStorage.setItem('billHistory', JSON.stringify(history.slice(0, 50)));
+    localStorage.setItem("billHistory", JSON.stringify(history.slice(0, 50)));
   }
 
-  // bind calculate button and Enter key
-  if (calcBtn) calcBtn.addEventListener('click', () => window.calculateBill());
+  // click handler
+  calcBtn?.addEventListener("click", () => window.calculateBill());
+
+  // Enter key handler: prevent default and trigger calculate
   [kwhInput, costInput, monthInput].forEach(el => {
-    if (!el) return;
-    el.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') window.calculateBill();
+    el?.addEventListener("keydown", e => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        window.calculateBill();
+      }
     });
   });
 });

@@ -1,55 +1,87 @@
 // js/dashboard.js
-// Renders history into a table; looks for tbody#historyBody or .table-container table
-function renderHistory() {
-  const history = (window.supabase) ? null : window.Storage.getHistory(); // if using supabase, dashboard should fetch instead
-  const tbody = document.getElementById('historyBody');
-  const fallbackTable = document.querySelector('.table-container table');
+// Fetches and renders bill history from Supabase or localStorage
 
-  if (!tbody && !fallbackTable) return;
+async function fetchFromSupabase() {
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
 
-  if (history === null && window.supabase) {
-    // Supabase fetch
-    (async () => {
-      try {
-        const { data, error } = await window.supabase.from('bills').select('*').order('id', { ascending: false }).limit(50);
-        if (error) throw error;
-        populateTable(data, tbody, fallbackTable);
-      } catch (err) {
-        console.error('Error fetching from Supabase:', err);
-      }
-    })();
-  } else {
-    // localStorage or provided array
-    populateTable(history || [], tbody, fallbackTable);
+    // If no user → fallback to local
+    if (!user) {
+      console.warn("No Supabase user logged in. Using localStorage instead.");
+      return null;
+    }
+
+    // Fetch bills for this user
+    const { data, error } = await supabase
+      .from("bills")
+      .select("*")
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false })  // <-- FIXED HERE
+      .limit(50);
+
+    if (error) throw error;
+
+    return data;
+
+  } catch (err) {
+    console.error("Error fetching Supabase data:", err);
+    return null;
   }
 }
 
-function populateTable(dataArray, tbody, fallbackTable) {
+function populateTable(dataArray) {
+  const tbody = document.getElementById("historyBody");
+  const fallbackTable = document.querySelector(".table-container table");
+
   if (tbody) {
-    tbody.innerHTML = '';
+    tbody.innerHTML = "";
     dataArray.forEach(row => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `<td>${row.date || ''}</td><td>${row.month || ''}</td><td>${row.kwh ?? ''}</td><td>₱${row.cost ?? ''}</td><td>₱${row.total ?? ''}</td>`;
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${row.date || ""}</td>
+        <td>${row.month || ""}</td>
+        <td>${row.kwh ?? ""}</td>
+        <td>₱${row.cost ?? ""}</td>
+        <td>₱${row.total ?? ""}</td>
+      `;
       tbody.appendChild(tr);
     });
     return;
   }
+
   if (fallbackTable) {
-    // ensure we have a tbody
-    let tb = fallbackTable.querySelector('tbody') || fallbackTable.appendChild(document.createElement('tbody'));
-    tb.innerHTML = '';
+    let tb = fallbackTable.querySelector("tbody") || fallbackTable.appendChild(document.createElement("tbody"));
+    tb.innerHTML = "";
     dataArray.forEach(row => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `<td>${row.date || ''}</td><td>${row.month || ''}</td><td>${row.kwh ?? ''}</td><td>₱${row.cost ?? ''}</td><td>₱${row.total ?? ''}</td>`;
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${row.date || ""}</td>
+        <td>${row.month || ""}</td>
+        <td>${row.kwh ?? ""}</td>
+        <td>₱${row.cost ?? ""}</td>
+        <td>₱${row.total ?? ""}</td>
+      `;
       tb.appendChild(tr);
     });
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  // auto-run on load
-  try { renderHistory(); } catch (e) { /* ignore */ }
+async function renderHistory() {
+  let bills = null;
+
+  if (window.supabase) {
+    bills = await fetchFromSupabase();
+  }
+
+  if (!bills) {
+    bills = JSON.parse(localStorage.getItem("billHistory") || "[]");
+  }
+
+  populateTable(bills);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderHistory();
 });
 
-// expose renderHistory
 window.renderHistory = renderHistory;

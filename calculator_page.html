@@ -6,11 +6,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="css/calc.css">
 </head>
+
 <body>
   <div id="menu-btn" aria-expanded="false">☰</div>
   <div id="sideMenu">
     <ul>
-      <li><a href="homepage.html">Home</a></li>
+      <li><a href="index.html">Home</a></li>
       <li><a href="dashboard.html">Dashboard</a></li>
       <li><a href="profile_page.html">Profile</a></li>
     </ul>
@@ -46,9 +47,15 @@
     </table>
   </div>
 
+  <!-- 🔥 Supabase MUST load BEFORE calc.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+
+  <!-- Your scripts (safe to load AFTER Supabase) -->
   <script src="js/menu.js"></script>
-  <script src="js/calc.js"></script>
   <script src="js/storage.js"></script>
   <script src="js/dashboard.js"></script>
+  <script src="js/calc.js"></script>
+
 </body>
 </html>
